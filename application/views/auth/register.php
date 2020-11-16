@@ -44,7 +44,7 @@
                 <hr>
 
                 <div class="text-center">
-                  <a class="small register" href="<?= base_url('auth/register')?>">Create Account</a>
+                  <a class="small register" href="<?= base_url('auth')?>">Sign In</a>
                 </div>
 
                 <div class="text-center mb-4">

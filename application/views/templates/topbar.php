@@ -16,15 +16,27 @@
                   <a class="nav-link text-dark" href="#" onclick="page_load('index')">Dashboard</a>
                 </li>
 
-                <?php if ($user['id_posisi'] <= 3 || $user['id_posisi'] > 4):?>
+                <?php if ($user['id_posisi'] <= 3):?>
                   <li class="nav-item <?php if ($page == 'input') echo 'active'?>">
                     <a class="nav-link text-dark" href="#" onclick="page_load('input')">Input IKS</a>
+                  </li>
+                <?php endif;?>
+
+                <?php if ($user['id_posisi'] > 4):?>
+                  <li class="nav-item <?php if ($page == 'proses') echo 'active'?>">
+                    <a class="nav-link text-dark" href="#" onclick="page_load('proses')">Konsep PIAP</a>
                   </li>
                 <?php endif;?>
 
                 <li class="nav-item <?php if ($page == 'data') echo 'active'?>">
                   <a class="nav-link text-dark" href="#" onclick="page_load('data')">Daftar IKS</a>
                 </li>
+
+                <?php if ($user['id_posisi'] >= 4):?>
+                  <li class="nav-item <?php if ($page == 'piap') echo 'active'?>">
+                    <a class="nav-link text-dark" href="#" onclick="page_load('piap')">Daftar PIAP</a>
+                  </li>
+                <?php endif;?>
               </ul>
 
               <ul class="navbar-nav ml-auto">

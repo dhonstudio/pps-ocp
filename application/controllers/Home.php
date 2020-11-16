@@ -44,6 +44,21 @@ class Home extends CI_Controller
 		$this->load->view('templates/footerend');
 	}
 
+	public function piap()
+	{
+		if(!$this->user) redirect('auth');
+
+		$data = _data('piap');
+
+		$this->load->view('templates/header', $data);
+		$this->load->view('templates/topbar');
+		$this->load->view('home/piap');
+		$this->load->view('templates/footer');
+		$this->load->view('scripts/data');
+		$this->load->view('scripts/input');
+		$this->load->view('templates/footerend');
+	}
+
 	public function input()
 	{
 		if(!$this->user) redirect('auth');
@@ -85,24 +100,53 @@ class Home extends CI_Controller
 	public function disposisi()
 	{
 		$id = $this->input->post('id_iks');
+		$disposisi = $this->input->post('disposisi');
 
 		$id_posisi = $this->user['id_posisi'];
 		$posisi = $id_posisi+1;
 
 		if ($id_posisi == 4) {
-			$to = 5;
+			$to = $this->db->get_where('users', ['id_posisi' => $posisi])->row_array()['id_user'];
+
+			$this->db->insert('log', [
+				'id_iks' => $id,
+				'from' => $this->user['id_user'],
+				'to' => $to,
+				'alasan' => $this->input->post('catatan_disposisi'),
+				'stamp' => time()
+			]);
+		} else {
+			$to = $disposisi;
+
+			foreach ($to as $t) {
+				$this->db->insert('log', [
+					'id_iks' => $id,
+					'from' => $this->user['id_user'],
+					'to' => $t,
+					'alasan' => $this->input->post('catatan_disposisi'),
+					'stamp' => time()
+				]);
+			}
 		}
 
 		$this->db->update('data', ['id_posisi' => $posisi], ['id_iks' => $id]);
-		$this->db->insert('log', [
-			'id_iks' => $id,
-			'from' => $this->user['id_user'],
-			'to' => $to,
-			'alasan' => $this->input->post('catatan_disposisi'),
-			'stamp' => time()
-		]);
 
 		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil didisposisi</div>');
 		redirect('home/data');
+	}
+
+	public function proses()
+	{
+		if(!$this->user) redirect('auth');
+
+		$data = _data('input');
+
+		$this->load->view('templates/header', $data);
+		$this->load->view('templates/topbar');
+		$this->load->view('home/proses');
+		$this->load->view('templates/footer');
+		$this->load->view('scripts/data');
+		$this->load->view('scripts/input');
+		$this->load->view('templates/footerend');
 	}
 }

@@ -79,4 +79,112 @@
       }
     }
   }
+
+  function proses() {
+    var id_iks = $('#id_iks').val()
+    var pokok = $('#pokok').val()
+    var latar = $('#latar').val()
+    var dasar = $('#dasar').val()
+    var obyek_isu = $('#obyek_isu').val()
+    var analisis = $('#analisis').val()
+    var legal = $('#legal').val()
+    var filosofi = $('#filosofi').val()
+    var operasional = $('#operasional').val()
+    var sosek = $('#sosek').val()
+    var lainnya = $('#lainnya').val()
+    var kinerja = $('#kinerja').val()
+    var penerimaan = $('#penerimaan').val()
+    var pelayanan = $('#pelayanan').val()
+    var fasilitasi = $('#fasilitasi').val()
+    var pengawasan = $('#pengawasan').val()
+    var kelembagaan = $('#kelembagaan').val()
+    var citra = $('#citra').val()
+    var usulan = $('#usulan').val()
+    var unit = $('#unit').val()
+
+    if (pokok == '') {
+      $('#pokok').popover('show');
+      $('#pokok').focus()
+      document.querySelector('#pokok')
+    } else if (latar == '') {
+      $('#latar').popover('show');
+      $('#latar').focus()
+      document.querySelector('#latar')
+    } else if (dasar == '') {
+      $('#dasar').popover('show');
+      $('#dasar').focus()
+      document.querySelector('#dasar')
+    } else if (analisis == '') {
+      $('#analisis').popover('show');
+      $('#analisis').focus()
+      document.querySelector('#analisis')
+    } else if (legal == '') {
+      $('#legal').popover('show');
+      $('#legal').focus()
+      document.querySelector('#legal')
+    } else if (filosofi == '') {
+      $('#filosofi').popover('show');
+      $('#filosofi').focus()
+      document.querySelector('#filosofi')
+    } else if (operasional == '') {
+      $('#operasional').popover('show');
+      $('#operasional').focus()
+      document.querySelector('#operasional')
+    } else if (sosek == '') {
+      $('#sosek').popover('show');
+      $('#sosek').focus()
+      document.querySelector('#sosek')
+    } else if (kinerja == '') {
+      $('#kinerja').popover('show');
+      $('#kinerja').focus()
+      document.querySelector('#kinerja')
+    } else if (penerimaan == '') {
+      $('#penerimaan').popover('show');
+      $('#penerimaan').focus()
+      document.querySelector('#penerimaan')
+    } else if (pelayanan == '') {
+      $('#pelayanan').popover('show');
+      $('#pelayanan').focus()
+      document.querySelector('#pelayanan')
+    } else if (fasilitasi == '') {
+      $('#fasilitasi').popover('show');
+      $('#fasilitasi').focus()
+      document.querySelector('#fasilitasi')
+    } else if (pengawasan == '') {
+      $('#pengawasan').popover('show');
+      $('#pengawasan').focus()
+      document.querySelector('#pengawasan')
+    } else if (kelembagaan == '') {
+      $('#kelembagaan').popover('show');
+      $('#kelembagaan').focus()
+      document.querySelector('#kelembagaan')
+    } else if (citra == '') {
+      $('#citra').popover('show');
+      $('#citra').focus()
+      document.querySelector('#citra')
+    } else if (usulan == '') {
+      $('#usulan').popover('show');
+      $('#usulan').focus()
+      document.querySelector('#usulan')
+    } else if (unit == '') {
+      $('#unit').popover('show');
+      $('#unit').focus()
+      document.querySelector('#unit')
+    } else {
+      $.ajax({
+        url: '<?= base_url('ajax/ajax_proses')?>',
+        type: 'post',
+        data: {id_iks:id_iks,pokok:pokok,latar:latar,dasar:dasar,obyek_isu:obyek_isu,analisis:analisis,legal:legal,filosofi:filosofi,operasional:operasional,sosek:sosek,lainnya:lainnya,kinerja:kinerja,penerimaan:penerimaan,pelayanan:pelayanan,fasilitasi:fasilitasi,pengawasan:pengawasan,kelembagaan:kelembagaan,citra:citra,usulan:usulan,unit:unit},
+        dataType: 'json',
+        success: function(data) {
+          $('.subbody').html(data.subbody);
+          $('.message').html(data.alert);
+
+          setTimeout(function() {
+            $('.alert-success').fadeOut('fast');
+          }, 2000);
+        }
+      });
+    }
+  }
 </script>

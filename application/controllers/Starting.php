@@ -51,6 +51,12 @@ class Starting extends CI_Controller
 			    'null' => TRUE,
 			    'default' => 0
 			  ),
+			  'id_seksi' => array(
+			    'type' => 'INT',
+			    'constraint' => 1,
+			    'null' => TRUE,
+			    'default' => 0
+			  ),
 			  'is_active' => array(
 			    'type' => 'INT',
 			    'constraint' => 1,
@@ -335,13 +341,48 @@ class Starting extends CI_Controller
 			} else if ($table == 'posisi') {
 				$query = "
 					INSERT INTO `posisi` (`id_posisi`, `posisi`) VALUES
+						(-4, 'Penolakan Direktorat PPS'),
 						(-2, 'Penolakan Kepala Kantor Pengusul'),
 						(-1, 'Penolakan Kepala Seksi Pengusul'),
 						(0, 'Pelaksana Pengusul'),
 						(1, 'Kepala Seksi Pengusul'),
 						(2, 'Kepala Kantor Pengusul'),
 						(4, 'Direktorat PPS'),
-						(5, 'Direktorat PPS')
+						(5, 'Direktorat PPS'),
+						(6, 'Direktorat PPS'),
+						(7, 'Direktorat PPS'),
+						(8, 'Direktorat PPS')
+				";
+			} else if ($table == 'users') {
+				$query = "
+					INSERT INTO `users` (`username`, `fullName`, `id_posisi`, `id_kantor`, `id_seksi`, `is_active`) VALUES
+						('196904091989121003', 'Direktur PPS', 4, 11, 0, 1),
+						('197407111995031001', 'Kepala Subdirektorat PSMT', 5, 11, 0, 1),
+						('197711242000011001', 'Kepala Seksi Kebijakan Organisasi', 6, 11, 1, 1),
+						('197705091997031002', 'Kepala Seksi Manajemen Kepegawaian', 6, 11, 2, 1),
+						('198003162001121001', 'Kepala Seksi PPB-MT', 6, 11, 3, 1),
+						('198904052009121004', 'KRISTO RAHMAT SILABAN', 7, 11, 1, 1),
+						('198508272004121004', 'MUHAMMAD ARAFIQ', 7, 11, 1, 1),
+						('199610042018011002', 'PANDU SUWANDI', 7, 11, 1, 1),
+						('199305142018012002', 'RENITA AYU PUTRI', 7, 11, 1, 1),
+						('199704112015121002', 'RIYANDI AKBAR RASID', 7, 11, 1, 1),
+						('198505092007011001', 'AMRI HIDAYAT', 7, 11, 2, 1),
+						('199507192015121001', 'MAJU P. SITORUS', 7, 11, 2, 1),
+						('199212032018011004', 'NIKOLAS SRI SEWANDONO', 7, 11, 2, 1),
+						('199904112018012001', 'NUHA ROFIFAH', 7, 11, 2, 1),
+						('199211062012101001', 'YOGA PUTRA PRATAMA', 7, 11, 2, 1),
+						('199012012012101001', 'ALWI ERLANGGA PRAKOSO', 7, 11, 3, 1),
+						('198711222007011003', 'BANU AZAM', 7, 11, 3, 1),
+						('198507292004121001', 'GANDA PARDAMEAN PURBA', 7, 11, 3, 1),
+						('199111152018011002', 'IBAN ARIA NUGRAHA', 7, 11, 3, 1),
+						('199707232018121002', 'LEO WICAKSONO', 7, 11, 3, 1),
+						('199803282018011002', 'MUHAMMAD ASYIFA MAULANA SHOLAHUDDIN', 7, 11, 3, 1),
+						('199907292018122002', 'NIKE DEWI YULIANA', 7, 11, 3, 1),
+						('198409052004121003', 'TAUFIQ RAHMAT', 7, 11, 3, 1),
+						('198908112010121003', 'ZUMAN HERI RITONGA', 7, 11, 3, 1),
+						('199103202013101002', 'MUHAMMAD RAMADHON', 0, 12, 0, 1),
+						('199103202013101001', 'Kepala Seksi Pengusul', 1, 12, 0, 1),
+						('199103202013101000', 'Kepala Kantor Pengusul', 2, 12, 0, 1)
 				";
 			}
 
@@ -512,6 +553,205 @@ class Starting extends CI_Controller
 			$this->dbforge->add_key('id_log', TRUE);
 
 			$this->dbforge->create_table($table, TRUE);
+
+			print_r('table '. $table .' create!');
+		}
+	}
+
+	public function log_piap($key)
+	{
+		if ($key != 'b6yh78') {
+			print_r('key invalid!');
+		} else {
+
+			$this->load->dbforge();
+
+			$table = 'log_piap';
+
+			$fields = array(
+			  'id_log' => array(
+			    'type' => 'INT',
+			    'auto_increment' => TRUE
+			  ),
+			  'id_piap' => array(
+			    'type' => 'INT',
+			    'null' => TRUE,
+			    'default' => 0
+			  ),
+			  'from' => array(
+			    'type' => 'INT',
+			    'null' => TRUE,
+			    'default' => 0
+			  ),
+			  'to' => array(
+			    'type' => 'INT',
+			    'null' => TRUE,
+			    'default' => 0
+			  ),
+			  'alasan' => array(
+			    'type' => 'VARCHAR',
+			    'constraint' => 500,
+			    'null' => TRUE,
+			    'default' => null
+			  ),
+			  'stamp' => array(
+			    'type' => 'INT',
+			    'null' => TRUE,
+			    'default' => null
+			  ),
+			 );
+
+			$this->dbforge->add_field($fields);
+
+			$this->dbforge->add_key('id_log', TRUE);
+
+			$this->dbforge->create_table($table, TRUE);
+
+			print_r('table '. $table .' create!');
+		}
+	}
+
+	public function piap($key)
+	{
+		if ($key != 'b6yh78') {
+			print_r('key invalid!');
+		} else {
+
+			$this->load->dbforge();
+
+			$table = 'piap';
+
+			$fields = array(
+			  'id_piap' => array(
+			    'type' => 'INT',
+			    'auto_increment' => TRUE
+			  ),
+			  'id_iks' => array(
+			    'type' => 'INT',
+			    'null' => TRUE,
+			    'default' => 0
+			  ),
+			  'id_user' => array(
+			    'type' => 'INT',
+			    'null' => TRUE,
+			    'default' => 0
+			  ),
+			  'pokok' => array(
+			    'type' => 'VARCHAR',
+			    'constraint' => 500,
+			    'null' => TRUE,
+			    'default' => null
+			  ),
+			  'latar' => array(
+			    'type' => 'TEXT',
+			    'null' => TRUE,
+			    'default' => null
+			  ),
+			  'dasar' => array(
+			    'type' => 'VARCHAR',
+			    'constraint' => 200,
+			    'null' => TRUE,
+			    'default' => null
+			  ),
+			  'obyek_isu' => array(
+			    'type' => 'VARCHAR',
+			    'constraint' => 20,
+			    'null' => TRUE,
+			    'default' => null
+			  ),
+			  'analisis' => array(
+			    'type' => 'TEXT',
+			    'null' => TRUE,
+			    'default' => null
+			  ),
+			  'legal' => array(
+			    'type' => 'TEXT',
+			    'null' => TRUE,
+			    'default' => null
+			  ),
+			  'filosofi' => array(
+			    'type' => 'TEXT',
+			    'null' => TRUE,
+			    'default' => null
+			  ),
+			  'operasional' => array(
+			    'type' => 'TEXT',
+			    'null' => TRUE,
+			    'default' => null
+			  ),
+			  'sosek' => array(
+			    'type' => 'TEXT',
+			    'null' => TRUE,
+			    'default' => null
+			  ),
+			  'lainnya' => array(
+			    'type' => 'TEXT',
+			    'null' => TRUE,
+			    'default' => null
+			  ),
+			  'kinerja' => array(
+			    'type' => 'TEXT',
+			    'null' => TRUE,
+			    'default' => null
+			  ),
+			  'penerimaan' => array(
+			    'type' => 'TEXT',
+			    'null' => TRUE,
+			    'default' => null
+			  ),
+			  'pelayanan' => array(
+			    'type' => 'TEXT',
+			    'null' => TRUE,
+			    'default' => null
+			  ),
+			  'fasilitasi' => array(
+			    'type' => 'TEXT',
+			    'null' => TRUE,
+			    'default' => null
+			  ),
+			  'pengawasan' => array(
+			    'type' => 'TEXT',
+			    'null' => TRUE,
+			    'default' => null
+			  ),
+			  'kelembagaan' => array(
+			    'type' => 'TEXT',
+			    'null' => TRUE,
+			    'default' => null
+			  ),
+			  'citra' => array(
+			    'type' => 'TEXT',
+			    'null' => TRUE,
+			    'default' => null
+			  ),
+			  'usulan' => array(
+			    'type' => 'TEXT',
+			    'null' => TRUE,
+			    'default' => null
+			  ),
+			  'unit' => array(
+			    'type' => 'INT',
+			    'null' => TRUE,
+			    'default' => 0
+			  ),
+			  'id_posisi' => array(
+			    'type' => 'INT',
+			    'null' => TRUE,
+			    'default' => 0
+			  ),
+			  'stamp' => array(
+			    'type' => 'INT',
+			    'null' => TRUE,
+			    'default' => 0
+			  )
+			 );
+
+			$this->dbforge->add_field($fields);
+
+			$this->dbforge->add_key('id_piap', TRUE);
+
+			$attributes = array('ENGINE' => 'MyISAM');
+			$this->dbforge->create_table($table, FALSE, $attributes);
 
 			print_r('table '. $table .' create!');
 		}

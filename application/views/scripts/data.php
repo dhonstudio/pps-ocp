@@ -23,11 +23,19 @@
         if (data.id_posisi < 0) {
           $('#posisi').html('<text class="text-danger">'+data.posisi+' (alasan: '+data.alasan+')</text>');
         } else {
-          if (data.id_posisi > 3) {
-            if (data.id_posisi == 4) {
-              $('#posisi').html('Direktur PPS');
-            } else if (data.id_posisi == 5) {
-              $('#posisi').html('Kasubdit PSMT (catatan: '+data.alasan+')');
+          if (<?= $user['id_posisi']?> >= 4) {
+            if (data.id_posisi > 3) {
+              if (data.id_posisi == 4) {
+                $('#posisi').html('Direktur PPS');
+              } else if (data.id_posisi == 5) {
+                $('#posisi').html('Kasubdit PSMT (catatan: '+data.alasan+')');
+              } else if (data.id_posisi == 6) {
+                $('#posisi').html('Kepala Seksi (catatan: '+data.alasan+')');
+              } else if (data.id_posisi == 7) {
+                $('#posisi').html('Pelaksana (catatan: '+data.alasan+')');
+              }
+            } else {
+              $('#posisi').html(data.posisi);
             }
           } else {
             $('#posisi').html(data.posisi);
@@ -121,6 +129,54 @@
       dataType: 'json',
       success: function(data) {
         $('#disposisiIKSBodyLabel').html('Disposisi IKS '+data.pokok+'?');
+      }
+    });
+  }
+
+  function proses_iks(elem) {
+    const id = $(elem).data('id')
+    const e = elem
+
+    $('[data-toggle=popover]').each(function () {
+      if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+        $(this).popover('hide');
+      }
+    });
+
+    $.ajax({
+      url: '<?= base_url('ajax/ajax_page/proses')?>',
+      type: 'get',
+      dataType: 'json',
+      success: function(data) {
+        $('.subbody').html(data.subbody);
+
+        $.ajax({
+          url: '<?= base_url('ajax/ajax_detail/')?>' + id,
+          type: 'get',
+          dataType: 'json',
+          success: function(data) {
+            $('#id_iks').val(data.id_iks);
+            $('#pokok').val(data.pokok);
+            $('#latar').val(data.latar);
+            $('#dasar').val(data.dasar);
+            $('#analisis').val(data.analisis);
+            $('#usulan').val(data.usulan);
+          }
+        });
+
+        $("input, select, textarea").on('click', function(){
+          
+        });
+
+        $("select").on('change', function(){
+          if ($(this).val() != '') $(this).popover('hide');
+          else $(this).popover('show');
+        });
+
+        $("input, textarea").on('keyup', function(){
+          if ($(this).val() != '') $(this).popover('hide');
+          else $(this).popover('show');
+        });
       }
     });
   }

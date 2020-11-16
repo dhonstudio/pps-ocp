@@ -64,7 +64,7 @@ class Ajax extends CI_Controller
 		$insert_id = $this->db->insert_id();
 
 		$this->db->insert('log', [
-			'id_IKS' => $insert_id,
+			'id_iks' => $insert_id,
 			'from' => $this->user['id_user'],
 			'to' => $this->user['id_user'],
 			'stamp' => time()
@@ -80,6 +80,15 @@ class Ajax extends CI_Controller
 
 	public function ajax_detail($id)
 	{
+		$id_user = $this->user['id_user'];
+		$id_posisi = $this->db->get_where('data', ['id_iks' => $id])->row_array()['id_posisi'];
+
+		if ($id_posisi < 0) {
+			$posisi = '`data`.`id_posisi`';
+		} else {
+			$posisi = $id_user;
+		}
+
 		$query = "
 			SELECT `data`.*, `kantor`.`kantor`, `posisi`.`posisi`, `sumber`.`sumber`, `log`.`alasan`
 			FROM `data` 
@@ -91,7 +100,7 @@ class Ajax extends CI_Controller
 			ON `data`.`id_posisi` = `posisi`.`id_posisi`
 			JOIN `log` 
 			ON `data`.`id_iks` = `log`.`id_iks`
-			AND `log`.`to` = `data`.`id_posisi`
+			AND `log`.`to` = $posisi
 			WHERE `data`.`id_iks` = $id
 		";
 		echo json_encode($this->db->query($query)->row_array());
@@ -110,7 +119,7 @@ class Ajax extends CI_Controller
 			$level_up = $this->db->get_where('users', ['id_kantor' => $this->user['id_kantor'], 'id_posisi' => $posisi])->row_array()['id_user'];
 		} else {
 			$posisi = 4;
-			$level_up = 4;
+			$level_up = $this->db->get_where('users', ['id_posisi' => $posisi])->row_array()['id_user'];
 		}
 
 		$this->db->update('data', ['id_posisi' => $posisi], ['id_iks' => $id]);
@@ -159,6 +168,79 @@ class Ajax extends CI_Controller
 		echo json_encode([
 			'alert' => '<div class="alert alert-fade alert-danger" role="alert">IKS berhasil ditolak</div>',
 			'subbody' => $this->load->view('home/data', $data, true)
+		]);
+	}
+
+	public function ajax_proses()
+	{
+		$id_user = $this->user['id_user'];
+		$id_iks = $_POST['id_iks'];
+		$pokok = $_POST['pokok'];
+		$latar = $_POST['latar'];
+		$dasar = $_POST['dasar'];
+		$obyek_isu = $_POST['obyek_isu'];
+		$analisis = $_POST['analisis'];
+		$legal = $_POST['legal'];
+		$filosofi = $_POST['filosofi'];
+		$operasional = $_POST['operasional'];
+		$sosek = $_POST['sosek'];
+		$lainnya = $_POST['lainnya'];
+		$kinerja = $_POST['kinerja'];
+		$penerimaan = $_POST['penerimaan'];
+		$pelayanan = $_POST['pelayanan'];
+		$fasilitasi = $_POST['fasilitasi'];
+		$pengawasan = $_POST['pengawasan'];
+		$kelembagaan = $_POST['kelembagaan'];
+		$citra = $_POST['citra'];
+		$usulan = $_POST['usulan'];
+		$unit = $_POST['unit'];
+		$id_posisi = $this->user['id_posisi'];
+		$posisi = $id_posisi+1;
+
+		$dataInsert = [
+			'id_user' => $id_user,
+			'id_iks' => $id_iks,
+			'pokok' => $pokok,
+			'latar' => $latar,
+			'dasar' => $dasar,
+			'obyek_isu' => $obyek_isu,
+			'analisis' => $analisis,
+			'legal' => $legal,
+			'filosofi' => $filosofi,
+			'operasional' => $operasional,
+			'sosek' => $sosek,
+			'lainnya' => $lainnya,
+			'kinerja' => $kinerja,
+			'penerimaan' => $penerimaan,
+			'pelayanan' => $pelayanan,
+			'fasilitasi' => $fasilitasi,
+			'pengawasan' => $pengawasan,
+			'kelembagaan' => $kelembagaan,
+			'citra' => $citra,
+			'usulan' => $usulan,
+			'unit' => $unit,
+			'id_posisi' => $id_posisi,
+			'stamp' => time(),
+		];
+
+		$this->db->insert('piap', $dataInsert);
+
+		$insert_id = $this->db->insert_id();
+
+		$this->db->update('data', ['id_posisi' => $posisi], ['id_iks' => $id_iks]);
+
+		$this->db->insert('log_piap', [
+			'id_piap' => $insert_id,
+			'from' => $this->user['id_user'],
+			'to' => $this->user['id_user'],
+			'stamp' => time()
+		]);
+
+		$data = _data('piap');
+
+		echo json_encode([
+			'alert' => '<div class="alert alert-fade alert-success" role="alert">Data berhasil disimpan</div>',
+			'subbody' => $this->load->view('home/piap', $data, true)
 		]);
 	}
 }

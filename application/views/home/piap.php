@@ -7,7 +7,7 @@
 <div class="container">
   <div class="message"></div>
   <?php if (isset($_SESSION['message'])) echo $_SESSION['message'];?>
-  <h2>CRITICAL ISSUE PAPER (CIP)</h2>
+  <h2>POLICY ISSUE ANALYSIS PAPER (PIAP)</h2>
 
   <div class="row mt-4">
     <div class="col"></div>
@@ -17,16 +17,13 @@
           <th>#</th>
           <th>Pokok Isu Kritis</th>
           <th>Posisi</th>
-          <?php if ($user['id_posisi'] >= 4):?>
-            <th>Dari</th>
-          <?php endif;?>
           <th>Tanggal Input</th>
           <th></th>
         </thead>
 
         <tbody>
           <?php $i = 1;?>
-          <?php foreach ($datas as $d):?>
+          <?php foreach ($piaps as $d):?>
             <tr <?php if ($d['id_posisi'] < 0) echo 'class="text-danger"'?>>
               <td><?= $i?></td>
               <td style="cursor:pointer" data-id="<?= $d['id_iks']?>" data-toggle="modal" data-target="#detailIKS" onclick="detail_iks(this)">
@@ -35,11 +32,6 @@
               <td style="cursor:pointer" data-id="<?= $d['id_iks']?>" data-toggle="modal" data-target="#detailIKS" onclick="detail_iks(this)">
                 <?= $d['posisi']?>
               </td>
-              <?php if ($user['id_posisi'] >= 4):?>
-                <td style="cursor:pointer" data-id="<?= $d['id_iks']?>" data-toggle="modal" data-target="#detailIKS" onclick="detail_iks(this)">
-                  <?= $d['kantor']?>
-                </td>
-              <?php endif;?>
               <td style="cursor:pointer" data-id="<?= $d['id_iks']?>" data-toggle="modal" data-target="#detailIKS" onclick="detail_iks(this)"><?= date('d F Y', $d['stamp'])?></td>
               <td>
                 <a href="#" class="badge badge-dark" data-id="<?= $d['id_iks']?>" data-toggle="modal" data-target="#detailIKS" onclick="detail_iks(this)">detail</a>
