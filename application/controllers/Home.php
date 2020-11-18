@@ -18,6 +18,17 @@ class Home extends CI_Controller
 	{
 		if(!$this->user) redirect('auth');
 
+		$data = _data('home');
+
+		$this->load->view('templates/header', $data);
+		$this->load->view('home/home');
+		$this->load->view('templates/footerend');
+	}
+
+	public function dashboard()
+	{
+		if(!$this->user) redirect('auth');
+
 		$data = _data('index');
 
 		$this->load->view('templates/header', $data);
@@ -95,6 +106,25 @@ class Home extends CI_Controller
 		];
 
 		$this->load->view('home/detail', $data);
+	}
+
+	public function detail_piap($id)
+	{
+		$query = "
+			SELECT `piap`.*, `posisi`.`posisi`
+			FROM `piap`
+			JOIN `posisi` 
+			ON `piap`.`id_posisi` = `posisi`.`id_posisi`
+			WHERE `id_piap` = $id
+		";
+		$piap = $this->db->query($query)->row_array();
+
+		$data = [
+			'id' => $id,
+			'piap' => $piap
+		];
+
+		$this->load->view('home/detail_piap', $data);
 	}
 
 	public function disposisi()

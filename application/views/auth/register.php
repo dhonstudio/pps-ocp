@@ -1,69 +1,40 @@
 <div class="container">
+	<img style="position:relative;top:90px;margin-bottom: 100px" src="<?= base_url('assets/img/logo.jpeg') ?>">
+	<div style="background-color: Yellow; width: 600px; height: 270px;margin-bottom: 120px" class="pt-3">
+		<div class="text-center">
+			<h3 class="mx-auto" style="color:DarkBlue"><b>SIGN UP</b></h3>
+		</div>
+		<div class="ml-5 mb-0"><?= $this->session->flashdata('message');?></div>
+		<form method="post" action="<?= base_url('auth/register')?>">
 
-  <div class="row justify-content-center">
+			<h6 class="ml-5" style="color:DarkBlue"><b>User Id (NIP):</b></h6>
 
-    <div class="col-lg-7">
+			<input class="ml-5" type="text" id="username" name="username" placeholder="......................................" value="<?= set_value('username');?>" data-toggle="popover" data-html="true" data-placement="right" data-content="<?= form_error('username', '<div class=\'text-danger\'>', '</div>');?>" style="background: transparent;border:0px">
 
-      <div class="card o-hidden border-0 my-5">
-        <div class="card-body p-0">
+			<h6 class="ml-5 mt-2" style="color:DarkBlue"><b>Password:</b></h6>
 
-          <div class="row">
-            <div class="col"></div>
+			<input class="ml-5" type="password" id="password" name="password" placeholder="......................................" value="<?= set_value('password');?>" data-toggle="popover" data-html="true" data-placement="right" data-content="<?= form_error('password', '<div class=\'text-danger\'>', '</div>');?>" style="background: transparent;border:0px">
 
-            <div id="form-login" class="col-6">
-              <div class="p-0">
+			<h6 class="ml-5 mt-2" style="color:DarkBlue"><b>Repeat Password:</b></h6>
 
-                <div class="text-center mb-4">
-                  <img src="<?= base_url('assets/img');?>" width="150" alt="Logo">
-                  <div>ONLINE CRITICAL PAPER</div>
-                  <div><small>SIGN UP</small></div>
-                </div>
+			<input class="ml-5" type="password" id="password2" name="password2" placeholder="......................................" value="<?= set_value('password2');?>" data-toggle="popover" data-html="true" data-placement="right" data-content="<?= form_error('password2', '<div class=\'text-danger\'>', '</div>');?>" style="background: transparent;border:0px">
 
-                <?= $this->session->flashdata('message');?>
+			<button type="submit" hidden class="btn btn-primary">
+              Sign In
+            </button>
 
-                <form method="post" action="<?= base_url('auth/register')?>">
-                  <div class="form-group">
-                    <input type="text" class="form-control" id="username" name="username" placeholder="NIP" value="<?= set_value('username');?>" data-toggle="popover" data-html="true" data-placement="right" data-content="<?= form_error('username', '<div class=\'text-danger\'>', '</div>');?>">
-                  </div>
-
-                  <div class="form-group">
-                    <input type="password" class="form-control" id="password" name="password" placeholder="Password" value="<?= set_value('password');?>" data-toggle="popover" data-html="true" data-placement="right" data-content="<?= form_error('password', '<div class=\'text-danger\'>', '</div>');?>">
-                  </div>
-
-                  <div class="form-group">
-                    <input type="password" class="form-control" id="password2" name="password2" placeholder="Ulangi Password" value="<?= set_value('password2');?>" data-toggle="popover" data-html="true" data-placement="right" data-content="<?= form_error('password2', '<div class=\'text-danger\'>', '</div>');?>">
-                  </div>
-
-                  <div class="text-center">
-                    <button type="submit" class="btn btn-primary">
-                      Sign Up
-                    </button>
-                  </div>
-                </form>
-                  
-                <hr>
-
-                <div class="text-center">
-                  <a class="small register" href="<?= base_url('auth')?>">Sign In</a>
-                </div>
-
-                <div class="text-center mb-4">
-                  <a class="small" href="https://wa.me/6287700889913">Contact Us</a>
-                </div>
-
-              </div>
+            <div class="float-right mr-5">
+              <a style="color:DarkBlue;" href="<?= base_url('auth')?>"><b>Login</b></a>
+              <br>
+              <a class="mt-3" style="color:DarkBlue" href="https://wa.me/6287700889913" target="_blank"><b>Contact Us</b></a>
             </div>
 
-            <div class="col"></div>
-          </div>
+		</form>
 
-        </div>
-      </div>
+		<img style="position:relative;top:50px;" src="<?= base_url('assets/img/foot.jpeg') ?>">
+	</div>
 
-    </div>
-
-  </div>
-</div>
-
-</div>
+	<div style="position:absolute;z-index:-1;right:0px;top:0px;">
+		<img src="<?= base_url('assets/img/side-right.jpeg') ?>" height="650px">
+	</div>
 </div>

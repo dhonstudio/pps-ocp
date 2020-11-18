@@ -1,7 +1,7 @@
-    <footer class="footer bg-white mt-5 mb-3">
+    <footer class="footer bg-transparent mt-5 mb-3">
       <div class="container">
         <div class="text-center">
-          <span class="text-muted">Copyright &copy; Dhon Studio <?= date('Y')?></span>
+          <span class="text-white">Copyright &copy; Dhon Studio <?= date('Y')?></span>
         </div>
       </div>
     </footer>
@@ -11,7 +11,7 @@
 
     <script>
       setTimeout(function() {
-	    $('.alert-success').fadeOut('fast');
+	    $('.text-success').fadeOut('fast');
 	  }, 2000);
 
       window.onload = function() {

@@ -15,7 +15,7 @@ function _data($page)
 		JOIN `posisi` 
 		ON `data`.`id_posisi` = `posisi`.`id_posisi`
 		WHERE `log`.`to` = $id_user
-		ORDER BY FIELD(`data`.`id_posisi`,0,1,2,4,5,6,7,-1,-2,-4),
+		ORDER BY FIELD(`data`.`id_posisi`,0,1,2,4,5,6,7,8,-1,-2,-4),
 		`log`.`id_iks` DESC
 	";
 	$query2 = "

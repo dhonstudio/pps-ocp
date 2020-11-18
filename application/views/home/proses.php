@@ -76,8 +76,10 @@
             <td>8.</td>
             <td>Unit Terkait</td>
             <td>
-              <input type="text" class="form-control" id="unit" name="unit" value="<?= set_value('unit');?>">
-            </div></td>
+              <div class="ui-widget">
+                <input type="text" class="form-control" id="unit" name="unit" value="<?= set_value('unit');?>">
+              </div>
+            </td>
           </tr>
 
           <tr><td></td><td></td><td><button href="#" class="btn btn-dark" onclick="proses()">Simpan</button></td></tr>

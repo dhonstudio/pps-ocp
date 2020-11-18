@@ -106,6 +106,30 @@ class Ajax extends CI_Controller
 		echo json_encode($this->db->query($query)->row_array());
 	}
 
+	public function ajax_detail_piap($id)
+	{
+		$id_user = $this->user['id_user'];
+		$id_posisi = $this->db->get_where('piap', ['id_piap' => $id])->row_array()['id_posisi'];
+
+		if ($id_posisi < 0) {
+			$posisi = '`piap`.`id_posisi`';
+		} else {
+			$posisi = $id_user;
+		}
+
+		$query = "
+			SELECT `piap`.*, `posisi`.`posisi`, `log_piap`.`alasan`
+			FROM `piap` 
+			JOIN `posisi` 
+			ON `piap`.`id_posisi` = `posisi`.`id_posisi`
+			JOIN `log_piap` 
+			ON `piap`.`id_piap` = `log_piap`.`id_piap`
+			AND `log_piap`.`to` = $posisi
+			WHERE `piap`.`id_piap` = $id
+		";
+		echo json_encode($this->db->query($query)->row_array());
+	}
+
 	public function ajax_ajukan()
 	{
 		$id = $_POST['id'];
@@ -144,6 +168,35 @@ class Ajax extends CI_Controller
 		]);
 	}
 
+	public function ajax_ajukan_piap()
+	{
+		$id = $_POST['id'];
+
+		$id_posisi = $this->db->get_where('piap', ['id_piap' => $id])->row_array()['id_posisi'];
+
+		$posisi = $id_posisi+1;
+		$level_up = $this->user['id_seksi']+2;
+
+		$this->db->update('piap', ['id_posisi' => $posisi], ['id_piap' => $id]);
+		//$this->db->update('bA56hU_data', ['id_posisi' => 0]);
+
+		$this->db->insert('log_piap', [
+			'id_piap' => $id,
+			'from' => $this->user['id_user'],
+			'to' => $level_up,
+			'stamp' => time()
+		]);
+
+		$data = _data('piap');
+
+		$alert = '<div class="alert alert-fade alert-success" role="alert">PIAP berhasil diajukan</div>';
+
+		echo json_encode([
+			'alert' => $alert,
+			'subbody' => $this->load->view('home/piap', $data, true)
+		]);
+	}
+
 	public function ajax_tolak()
 	{
 		$id = $_POST['id'];
@@ -169,6 +222,11 @@ class Ajax extends CI_Controller
 			'alert' => '<div class="alert alert-fade alert-danger" role="alert">IKS berhasil ditolak</div>',
 			'subbody' => $this->load->view('home/data', $data, true)
 		]);
+	}
+
+	public function ajax_kantor()
+	{
+		echo json_encode(array_column($this->db->get('kantor')->result_array(), 'kantor'));
 	}
 
 	public function ajax_proses()

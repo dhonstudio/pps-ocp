@@ -39,6 +39,7 @@ class Auth extends CI_Controller
 	{
 		$user = $this->db->get_where('users', ['username' => $this->input->post('username')])->row_array();
 
+		/*
 		if ($user) {
 			if ($user['is_active'] == 1) {
 				if(password_verify($this->input->post('password'), $user['password'])){
@@ -59,6 +60,30 @@ class Auth extends CI_Controller
 			}
 		} else {
 			$this->session->set_flashdata('message','<div class="alert alert-danger" role="alert">Incorrect Username/Password</div>');
+			redirect('auth');
+		}
+		*/
+
+		if ($user) {
+			if ($user['is_active'] == 1) {
+				if(password_verify($this->input->post('password'), $user['password'])){
+					$dataSession = [
+						'user' => $user['username']
+					];
+					$this->session->set_userdata($dataSession);
+
+					$this->session->set_flashdata('message','<div class="alert alert-fade alert-success" role="alert">Succesfully signed in</div>');
+					redirect('home');
+				} else {
+					$this->session->set_flashdata('message','<div class="text-danger" style="font-size:80%">Incorrect Username/Password</div>');
+					redirect('auth');
+				}
+			} else {
+				$this->session->set_flashdata('message','<div class="text-danger" style="font-size:80%">User on validation process</div>');
+				redirect('auth');
+			}
+		} else {
+			$this->session->set_flashdata('message','<div class="text-danger" style="font-size:80%">Incorrect Username/Password</div>');
 			redirect('auth');
 		}
 	}
@@ -94,6 +119,7 @@ class Auth extends CI_Controller
 
 		$av_user = $this->db->get_where('users', ['username' => $username])->row_array();
 
+		/*
 		if ($av_user) {
 			if ($av_user['password'] === null) {
 				$this->db->update('users', ['password' => $password, 'stamp' => time()], ['username' => $username]);
@@ -102,6 +128,17 @@ class Auth extends CI_Controller
 				redirect('auth');
 			} else {
 				$this->session->set_flashdata('message','<div class="alert alert-danger" role="alert">NIP sudah pernah didaftarkan</div>');
+				redirect('auth/register');
+			}
+			*/
+		if ($av_user) {
+			if ($av_user['password'] === null) {
+				$this->db->update('users', ['password' => $password, 'stamp' => time()], ['username' => $username]);
+
+				$this->session->set_flashdata('message','<div class="text-success" style="font-size:80%">Succesfully registered, please sign in</div>');
+				redirect('auth');
+			} else {
+				$this->session->set_flashdata('message','<div class="text-danger" style="font-size:80%">NIP sudah pernah didaftarkan</div>');
 				redirect('auth/register');
 			}
 		} else {
@@ -113,7 +150,8 @@ class Auth extends CI_Controller
 
 			$this->db->insert('users', $dataInsert);
 
-			$this->session->set_flashdata('message','<div class="alert alert-success" role="alert">Succesfully registered, please wait for our validation</div>');
+			//$this->session->set_flashdata('message','<div class="alert alert-success" role="alert">Succesfully registered, please wait for our validation</div>');
+			$this->session->set_flashdata('message','<div class="text-success" style="font-size:80%">Succesfully registered, please wait for our validation</div>');
 			redirect('auth');
 		}
 	}
@@ -122,7 +160,8 @@ class Auth extends CI_Controller
 	{
 		$this->session->unset_userdata('user');
 
-		$this->session->set_flashdata('message','<div class="alert alert-success alert-fade" role="alert">Session Ended</div>');
+		//$this->session->set_flashdata('message','<div class="alert alert-success alert-fade" role="alert">Session Ended</div>');
+		$this->session->set_flashdata('message','<div class="text-success" style="font-size:80%">Session Ended</div>');
 		redirect('auth');
 	}
 }

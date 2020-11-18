@@ -78,7 +78,7 @@ $pdf->AddPage();
 
 $pdf->SetFont('Arial','BIU',12);
 $pdf->Cell(80);
-$pdf->Cell(30,10,'CRITICAL ISSUE PAPER',0,0,'C');
+$pdf->Cell(30,10,'CRITICAL ISSUE PAPER (CIP)',0,0,'C');
 $pdf->Ln(0);
 
 $pdf->SetFont('Arial','',12);
@@ -156,7 +156,7 @@ $pdf->Ln(-2.5);
 
 $pdf->Cell(70);
 $text = $iks['latar'];
-$nb=$pdf->WordWrap($text,120);
+$nb=$pdf->WordWrap($text,110);
 $pdf->MultiCell(120,5,$text);
 
 $pdf->Ln(5);
@@ -171,7 +171,7 @@ $pdf->Ln(-2.5);
 
 $pdf->Cell(70);
 $text = $iks['dasar'];
-$nb=$pdf->WordWrap($text,120);
+$nb=$pdf->WordWrap($text,110);
 $pdf->MultiCell(120,5,$text);
 
 $pdf->Ln(5);
@@ -186,7 +186,7 @@ $pdf->Ln(-2.5);
 
 $pdf->Cell(70);
 $text = $iks['uraian'];
-$nb=$pdf->WordWrap($text,120);
+$nb=$pdf->WordWrap($text,110);
 $pdf->MultiCell(120,5,$text);
 
 $pdf->Ln(5);

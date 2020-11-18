@@ -351,7 +351,7 @@ class Starting extends CI_Controller
 						(5, 'Direktorat PPS'),
 						(6, 'Direktorat PPS'),
 						(7, 'Direktorat PPS'),
-						(8, 'Direktorat PPS')
+						(8, 'Draft PIAP')
 				";
 			} else if ($table == 'users') {
 				$query = "
@@ -730,9 +730,9 @@ class Starting extends CI_Controller
 			    'default' => null
 			  ),
 			  'unit' => array(
-			    'type' => 'INT',
+			    'type' => 'TEXT',
 			    'null' => TRUE,
-			    'default' => 0
+			    'default' => null
 			  ),
 			  'id_posisi' => array(
 			    'type' => 'INT',

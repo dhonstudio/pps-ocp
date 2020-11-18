@@ -80,6 +80,64 @@
     }
   }
 
+  function acomplete(){
+    $.ajax({
+      url: '<?= base_url('ajax/ajax_kantor')?>',
+      type: 'get',
+      dataType: 'json',
+      success: function(data) {
+        availableTags = data;
+      }
+    });
+
+    function split( val ) {
+      return val.split( /,\s*/ );
+    }
+    function extractLast( term ) {
+      return split( term ).pop();
+    }
+
+    $( "#unit" )
+      // don't navigate away from the field on tab when selecting an item
+      .on( "keydown", function( event ) {
+        if ( event.keyCode === $.ui.keyCode.TAB &&
+            $( this ).autocomplete( "instance" ).menu.active ) {
+          event.preventDefault();
+        }
+      })
+      .autocomplete({
+        minLength: 0,
+        source: function( request, response ) {
+          // delegate back to autocomplete, but extract the last term
+          response( $.ui.autocomplete.filter(
+            availableTags, extractLast( request.term ) ) );
+        },
+        focus: function() {
+          // prevent value inserted on focus
+          return false;
+        },
+        select: function( event, ui ) {
+          var terms = split( this.value );
+          // remove the current input
+          terms.pop();
+          // add the selected item
+          terms.push( ui.item.value );
+          // add placeholder to get the comma-and-space at the end
+          terms.push( "" );
+          this.value = terms.join( ", " );
+          return false;
+        }
+      });
+  }
+
+  $( document ).ajaxSuccess(function() {
+    acomplete()
+  })
+
+  $(function () {
+    acomplete()
+  });
+
   function proses() {
     var id_iks = $('#id_iks').val()
     var pokok = $('#pokok').val()

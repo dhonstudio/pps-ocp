@@ -33,7 +33,17 @@
                 <?= $d['pokok']?>
               </td>
               <td style="cursor:pointer" data-id="<?= $d['id_iks']?>" data-toggle="modal" data-target="#detailIKS" onclick="detail_iks(this)">
-                <?= $d['posisi']?>
+                <?php if ($user['id_posisi'] <= 3):?>
+                  <?= $d['posisi']?>
+                <?php else :?>
+                  <?php 
+                  if ($d['id_posisi'] == 4) echo 'Direktur PPS';
+                  else if ($d['id_posisi'] == 5) echo 'Kasubdit PSMT';
+                  else if ($d['id_posisi'] == 6) echo 'Kepala Seksi';
+                  else if ($d['id_posisi'] == 7) echo 'Pelaksana';
+                  else if ($d['id_posisi'] == 8) echo 'Draft PIAP Pelaksana';
+                  ?>
+                <?php endif;?>
               </td>
               <?php if ($user['id_posisi'] >= 4):?>
                 <td style="cursor:pointer" data-id="<?= $d['id_iks']?>" data-toggle="modal" data-target="#detailIKS" onclick="detail_iks(this)">

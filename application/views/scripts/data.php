@@ -1,4 +1,80 @@
 <script>
+  function detail_piap(elem) {
+    const id = $(elem).data('id')
+
+    $.ajax({
+      url: '<?= base_url('ajax/ajax_detail_piap/')?>' + id,
+      type: 'get',
+      dataType: 'json',
+      success: function(data) {
+        $('#pokok').html(data.pokok);
+        $('#latar').html(data.latar);
+        $('#dasar').html(data.dasar);
+        $('#obyek_isu').html(data.obyek_isu);
+        $('#analisis').html(data.analisis);
+        $('#legal').html(data.legal);
+        $('#filosofi').html(data.filosofi);
+        $('#operasional').html(data.operasional);
+        $('#sosek').html(data.sosek);
+        $('#lainnya').html(data.lainnya);
+        $('#kinerja').html(data.kinerja);
+        $('#penerimaan').html(data.penerimaan);
+        $('#pelayanan').html(data.pelayanan);
+        $('#fasilitasi').html(data.fasilitasi);
+        $('#pengawasan').html(data.pengawasan);
+        $('#kelembagaan').html(data.kelembagaan);
+        $('#citra').html(data.citra);
+        $('#usulan').html(data.usulan);
+        $('#unit').html(data.unit);
+        if (data.id_posisi < 0) {
+          $('#posisi').html('<text class="text-danger">'+data.posisi+' (alasan: '+data.alasan+')</text>');
+        } else {
+          if (data.id_posisi == 7) {
+            $('#posisi').html('Draft PIAP Pelaksana');
+          } else if (data.id_posisi == 8) {
+            $('#posisi').html('Draft PIAP Kepala Seksi');
+          }
+        }
+      }
+    });
+  }
+
+  function ajukan_piap_pre(elem) {
+    const id = $(elem).data('id')
+    $('.ajukan').attr('data-id', id);
+
+    $.ajax({
+      url: '<?= base_url('ajax/ajax_detail_piap/')?>' + id,
+      type: 'get',
+      dataType: 'json',
+      success: function(data) {
+        $('#ajukanPIAPBodyLabel').html('Ajukan PIAP '+data.pokok+'?');
+      }
+    });
+  }
+
+  function ajukan_piap(elem) {
+    const id = $(elem).data('id')
+
+    $.ajax({
+      url: '<?= base_url('ajax/ajax_ajukan_piap')?>',
+      type: 'post',
+      data: {id:id},
+      dataType: 'json',
+      success: function(data) {
+        $('.modal-backdrop').remove();
+        $("body").removeClass("modal-open")
+
+        $('.subbody').html(data.subbody);
+        $('.message').html(data.alert);
+
+        setTimeout(function() {
+          $('.alert-success').fadeOut('fast');
+        }, 2000);
+      }
+    });
+  }
+
   function detail_iks(elem) {
     const id = $(elem).data('id')
 
@@ -33,6 +109,8 @@
                 $('#posisi').html('Kepala Seksi (catatan: '+data.alasan+')');
               } else if (data.id_posisi == 7) {
                 $('#posisi').html('Pelaksana (catatan: '+data.alasan+')');
+              } else if (data.id_posisi == 8) {
+                $('#posisi').html('Draft PIAP Pelaksana');
               }
             } else {
               $('#posisi').html(data.posisi);
