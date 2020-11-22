@@ -32,7 +32,11 @@
               <td style="cursor:pointer" data-id="<?= $d['id_piap']?>" data-toggle="modal" data-target="#detailPIAP" onclick="detail_piap(this)">
                 <?php 
                 if ($d['id_posisi'] == 7) echo 'Draft PIAP Pelaksana';
-                else if ($d['id_posisi'] == 8) echo 'Draft PIAP Kepala Seksi';
+                else if ($d['id_posisi'] == 6) echo 'Draft PIAP Kepala Seksi';
+                else if ($d['id_posisi'] == 5) echo 'Draft PIAP Kasubdit PSMT';
+                else if ($d['id_posisi'] == 4) echo 'Draft PIAP Direktur PPS';
+                else if ($d['id_posisi'] == -4) echo 'Penolakan Direktur PPS';
+                else echo $d['posisi'];
                 ?>
               </td>
               <td style="cursor:pointer" data-id="<?= $d['id_piap']?>" data-toggle="modal" data-target="#detailPIAP" onclick="detail_piap(this)"><?= date('d F Y', $d['stamp'])?></td>
@@ -42,8 +46,8 @@
                 <a href="<?= base_url('home/detail_piap/'.$d['id_piap'])?>" target="_blank" class="badge badge-primary" >print</a>
 
                 <?php if($d['id_posisi'] == $user['id_posisi']) :?>
-                  <?php if ($user['id_posisi'] > 0 && $user['id_posisi'] < 5):?>
-                    <a href="#" data-id="<?= $d['id_piap']?>" class="badge badge-danger" data-toggle="modal" data-target="#tolakIKS" onclick="tolak_iks_pre(this)">tolak</a>
+                  <?php if ($user['id_posisi'] < 7):?>
+                    <a href="#" data-id="<?= $d['id_piap']?>" class="badge badge-danger" data-toggle="modal" data-target="#tolakPIAP" onclick="tolak_piap_pre(this)">tolak</a>
                   <?php endif;?>
 
                   <a href="#" data-id="<?= $d['id_piap']?>" class="badge badge-success" data-toggle="modal" data-target="#ajukanPIAP" onclick="ajukan_piap_pre(this)">ajukan</a>
@@ -111,17 +115,17 @@
   </div>
 </div>
 
-<div class="modal fade" id="tolakIKS" tabindex="-1" role="dialog" aria-labelledby="tolakIKSLabel" aria-hidden="true">
+<div class="modal fade" id="tolakPIAP" tabindex="-1" role="dialog" aria-labelledby="tolakPIAPLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title text-danger" id="tolakIKSLabel">Tolak IKS</h5>
+        <h5 class="modal-title text-danger" id="tolakPIAPLabel">Tolak PIAP</h5>
         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">×</span>
         </button>
       </div>
       <div class="modal-body">
-        <text id="tolakIKSBodyLabel"></text>
+        <text id="tolakPIAPBodyLabel"></text>
         <br>
         <br>
         <div class="form-group">
@@ -131,7 +135,7 @@
       </div>
       <div class="modal-footer">
         <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
-        <a class="btn btn-danger tolak" data-id="" href="#" onclick="tolak_iks(this)">Tolak</a>
+        <a class="btn btn-danger tolak" data-id="" href="#" onclick="tolak_piap(this)">Tolak</a>
       </div>
     </div>
   </div>

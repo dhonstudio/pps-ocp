@@ -31,8 +31,14 @@
         } else {
           if (data.id_posisi == 7) {
             $('#posisi').html('Draft PIAP Pelaksana');
-          } else if (data.id_posisi == 8) {
+          } else if (data.id_posisi == 6) {
             $('#posisi').html('Draft PIAP Kepala Seksi');
+          } else if (data.id_posisi == 5) {
+            $('#posisi').html('Draft PIAP Kasubdit PSMT');
+          } else if (data.id_posisi == 4) {
+            $('#posisi').html('Draft PIAP Direktur PPS');
+          } else if (data.id_posisi == -4) {
+            $('#posisi').html('Penolakan Direktur PPS');
           }
         }
       }
@@ -75,6 +81,43 @@
     });
   }
 
+  function tolak_piap_pre(elem) {
+    const id = $(elem).data('id')
+    $('.tolak').attr('data-id', id);
+
+    $.ajax({
+      url: '<?= base_url('ajax/ajax_detail_piap/')?>' + id,
+      type: 'get',
+      dataType: 'json',
+      success: function(data) {
+        $('#tolakPIAPBodyLabel').html('Tolak PIAP '+data.pokok+'?');
+      }
+    });
+  }
+
+  function tolak_piap(elem) {
+    const id = $(elem).data('id')
+    const alasan = $('#alasan').val()
+
+    $.ajax({
+      url: '<?= base_url('ajax/ajax_tolak_piap')?>',
+      type: 'post',
+      data: {id:id, alasan:alasan},
+      dataType: 'json',
+      success: function(data) {
+        $('.modal-backdrop').remove();
+        $("body").removeClass("modal-open")
+
+        $('.subbody').html(data.subbody);
+        $('.message').html(data.alert);
+
+        setTimeout(function() {
+          $('.alert-fade').fadeOut('fast');
+        }, 2000);
+      }
+    });
+  }
+
   function detail_iks(elem) {
     const id = $(elem).data('id')
 
@@ -111,6 +154,12 @@
                 $('#posisi').html('Pelaksana (catatan: '+data.alasan+')');
               } else if (data.id_posisi == 8) {
                 $('#posisi').html('Draft PIAP Pelaksana');
+              } else if (data.id_posisi == 9) {
+                $('#posisi').html('Draft PIAP Kepala Seksi');
+              } else if (data.id_posisi == 10) {
+                $('#posisi').html('Draft PIAP Kasubdit PSMT');
+              } else if (data.id_posisi == 11) {
+                $('#posisi').html('Draft PIAP Direktur PPS');
               }
             } else {
               $('#posisi').html(data.posisi);

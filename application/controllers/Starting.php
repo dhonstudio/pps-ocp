@@ -341,6 +341,8 @@ class Starting extends CI_Controller
 			} else if ($table == 'posisi') {
 				$query = "
 					INSERT INTO `posisi` (`id_posisi`, `posisi`) VALUES
+						(-5, 'Penolakan Kepala Subdirektorat PSMT'),
+						(-6, 'Penolakan Kepala Seksi'),
 						(-4, 'Penolakan Direktorat PPS'),
 						(-2, 'Penolakan Kepala Kantor Pengusul'),
 						(-1, 'Penolakan Kepala Seksi Pengusul'),
@@ -351,7 +353,10 @@ class Starting extends CI_Controller
 						(5, 'Direktorat PPS'),
 						(6, 'Direktorat PPS'),
 						(7, 'Direktorat PPS'),
-						(8, 'Draft PIAP')
+						(8, 'Draft PIAP'),
+						(9, 'Draft PIAP'),
+						(10, 'Draft PIAP'),
+						(11, 'Draft PIAP')
 				";
 			} else if ($table == 'users') {
 				$query = "

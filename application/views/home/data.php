@@ -42,6 +42,9 @@
                   else if ($d['id_posisi'] == 6) echo 'Kepala Seksi';
                   else if ($d['id_posisi'] == 7) echo 'Pelaksana';
                   else if ($d['id_posisi'] == 8) echo 'Draft PIAP Pelaksana';
+                  else if ($d['id_posisi'] == 9) echo 'Draft PIAP Kepala Seksi';
+                  else if ($d['id_posisi'] == 10) echo 'Draft PIAP Kasubdit PSMT';
+                  else if ($d['id_posisi'] == 11) echo 'Draft PIAP Direktur PPS';
                   ?>
                 <?php endif;?>
               </td>

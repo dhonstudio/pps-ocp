@@ -173,12 +173,16 @@ class Ajax extends CI_Controller
 		$id = $_POST['id'];
 
 		$id_posisi = $this->db->get_where('piap', ['id_piap' => $id])->row_array()['id_posisi'];
+		$id_iks = $this->db->get_where('piap', ['id_piap' => $id])->row_array()['id_iks'];
+		$id_posisi_iks = $this->db->get_where('data', ['id_iks' => $id_iks])->row_array()['id_posisi'];
 
-		$posisi = $id_posisi+1;
-		$level_up = $this->user['id_seksi']+2;
+		if ($this->user['id_posisi'] == 7)
+			$level_up = $this->user['id_seksi']+2;
+		else
+			$level_up = $this->db->get_where('users', ['id_posisi' => $id_posisi-1])->row_array()['id_user'];
 
-		$this->db->update('piap', ['id_posisi' => $posisi], ['id_piap' => $id]);
-		//$this->db->update('bA56hU_data', ['id_posisi' => 0]);
+		$this->db->update('piap', ['id_posisi' => $id_posisi-1], ['id_piap' => $id]);
+		$this->db->update('data', ['id_posisi' => $id_posisi_iks+1], ['id_iks' => $id_iks]);
 
 		$this->db->insert('log_piap', [
 			'id_piap' => $id,
@@ -221,6 +225,35 @@ class Ajax extends CI_Controller
 		echo json_encode([
 			'alert' => '<div class="alert alert-fade alert-danger" role="alert">IKS berhasil ditolak</div>',
 			'subbody' => $this->load->view('home/data', $data, true)
+		]);
+	}
+
+	public function ajax_tolak_piap()
+	{
+		$id = $_POST['id'];
+		$alasan = $_POST['alasan'];
+
+		$id_posisi = $this->db->get_where('piap', ['id_piap' => $id])->row_array()['id_posisi'];
+		$id_iks = $this->db->get_where('piap', ['id_piap' => $id])->row_array()['id_iks'];
+
+		$posisi = 0-$id_posisi;
+
+		$this->db->update('piap', ['id_posisi' => $posisi], ['id_piap' => $id]);
+		$this->db->update('data', ['id_posisi' => 7], ['id_iks' => $id_iks]);
+
+		$this->db->insert('log_piap', [
+			'id_piap' => $id,
+			'from' => $this->user['id_user'],
+			'to' => $posisi,
+			'stamp' => time(),
+			'alasan' => strtoupper($alasan)
+		]);
+
+		$data = _data('piap');
+
+		echo json_encode([
+			'alert' => '<div class="alert alert-fade alert-danger" role="alert">PIAP berhasil ditolak</div>',
+			'subbody' => $this->load->view('home/piap', $data, true)
 		]);
 	}
 
